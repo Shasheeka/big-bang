@@ -23,7 +23,7 @@ class CreateTenantsTable extends Migration
             $table->string('dbusername');
             $table->string('dbpassword');
             $table->integer('dbport')->unsigned();
-            $table->enum('status', [0, 1]);
+            $table->smallInteger('status')->unsigned();
             $table->timestamps();
         });
     }
