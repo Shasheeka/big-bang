@@ -22,6 +22,7 @@ class CreateTenantsTable extends Migration
             $table->string('dbhost');
             $table->string('dbusername');
             $table->string('dbpassword');
+            $table->string('url');
             $table->integer('dbport')->unsigned();
             $table->smallInteger('status')->unsigned();
             $table->timestamps();

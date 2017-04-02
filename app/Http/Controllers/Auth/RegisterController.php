@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Tenant;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -65,12 +66,26 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        return User::create([
-            'fname' => $data['fname'],
-            'lname' => $data['lname'],
+       $user =   User::create([
+            'fname'      => $data['fname'],
+            'lname'      => $data['lname'],
             'store_name' => $data['store_name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'email'      => $data['email'],
+            'password'   => bcrypt($data['password']),
         ]);
+
+         $tenant = Tenant::create([
+            'user_id'    => $user->id,
+            'subdomain'  => 'tenant'.$user->id,
+            'dbname'     => 'tenant'.$user->id,
+            'dbhost'     => 'localhost',
+            'dbusername' => 'root',
+            'dbpassword' => 'root',
+            'dbport'     => '3306',
+            'url'        => 'http://'.'tenant'.$user->id.'.bigbang.com',
+            'status'     => 1,
+        ]);
+
+        return  $user;
     }
 }
